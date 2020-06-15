@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MartianResearchingSystem.Core;
-using MartianResearchingSystem.Core.Command;
-using MartianResearchingSystem.Core.Robot;
-using MartianResearchingSystem.Core.Surface;
+using MartianResearchingSystem.Core.Parsers;
+using MartianResearchingSystem.Core.Robots;
 using MartianResearchingSystem.Utils;
 
 namespace MartianResearchingSystem.CUI
@@ -48,7 +47,7 @@ namespace MartianResearchingSystem.CUI
 			var robotDataParser = new RobotDataParser();
 			var commandsParser = new CommandsParser();
 
-			var thingsToDo = new Dictionary<Robot, List<Command>>();
+			var thingsToDo = new Dictionary<SimpleMartianRobot, List<Command>>();
 
 			for(var i = 1; i < lines.Length - 1; i += 2)
 			{
@@ -66,7 +65,7 @@ namespace MartianResearchingSystem.CUI
 			var researchSession = new ResearchSession();
 			
 			researchSession.MarsSurface = marsSurface;
-			researchSession.ThingsToDo = thingsToDo;
+			researchSession.Operands = thingsToDo;
 
 			foreach (var robot in thingsToDo)
 			{

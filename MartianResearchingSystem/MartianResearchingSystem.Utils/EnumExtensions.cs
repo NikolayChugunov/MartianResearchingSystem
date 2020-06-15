@@ -20,14 +20,12 @@ namespace MartianResearchingSystem.Utils
 				.GetType()
 				.GetField(val.ToString());
 
-			var descriptionAttribute = fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute), false) as DescriptionAttribute;
+            if (fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute descriptionAttribute)
+            {
+                return descriptionAttribute.Description;
+            }
 
-			if (descriptionAttribute != null)
-			{
-				return descriptionAttribute.Description;
-			}
-
-			return string.Empty;
+            return string.Empty;
 		}
 	}
 }

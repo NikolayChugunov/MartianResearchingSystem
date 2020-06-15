@@ -2,6 +2,9 @@
 
 namespace MartianResearchingSystem.Utils
 {
+    /// <summary>
+    /// Содержит стандартные проверки для значений различных типов.
+    /// </summary>
 	public static class Guard
 	{
 		/// <summary>

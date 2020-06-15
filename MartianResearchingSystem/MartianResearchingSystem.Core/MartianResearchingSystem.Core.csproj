@@ -41,14 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\CommandsParser.cs" />
-    <Compile Include="Surface\MarsSurfaceDataParser.cs" />
-    <Compile Include="Positioning\Position.cs" />
-    <Compile Include="Positioning\SpaceOrientation.cs" />
-    <Compile Include="Robot\Robot.cs" />
-    <Compile Include="Robot\RobotDataParser.cs" />
-    <Compile Include="Surface\MarsSurface.cs" />
+    <Compile Include="Robots\Command.cs" />
+    <Compile Include="Parsers\CommandsParser.cs" />
+    <Compile Include="Parsers\MarsSurfaceDataParser.cs" />
+    <Compile Include="Spacing\Position.cs" />
+    <Compile Include="Spacing\Orientation.cs" />
+    <Compile Include="Robots\SimpleMartianRobot.cs" />
+    <Compile Include="Parsers\RobotDataParser.cs" />
+    <Compile Include="Spacing\MarsSurface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResearchSession.cs" />
   </ItemGroup>
@@ -58,5 +58,6 @@
       <Name>MartianResearchingSystem.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

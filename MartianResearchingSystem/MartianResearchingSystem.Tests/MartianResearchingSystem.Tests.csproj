@@ -49,10 +49,25 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Parsing\MarsSurfaceDataParserTests.cs" />
+    <Compile Include="Parsing\RobotDataParserTests.cs" />
+    <Compile Include="Parsing\CommandsParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Robot\RobotRotationTests.cs" />
+    <Compile Include="Robot\RobotMovingTests.cs" />
+    <Compile Include="Robot\RobotCommandExecutionTests.cs" />
+    <Compile Include="TestClasses\SpaceOrientation.cs" />
+    <Compile Include="TestClasses\TestRobot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MartianResearchingSystem.Core\MartianResearchingSystem.Core.csproj">
+      <Project>{a967ba6b-219a-459e-8442-c5e155396486}</Project>
+      <Name>MartianResearchingSystem.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

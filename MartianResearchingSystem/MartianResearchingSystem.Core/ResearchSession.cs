@@ -1,64 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using MartianResearchingSystem.Core.Command;
-using MartianResearchingSystem.Core.Positioning;
-using MartianResearchingSystem.Core.Robot;
-using MartianResearchingSystem.Core.Surface;
+﻿using System.Collections.Generic;
+
+using MartianResearchingSystem.Core.Robots;
+using MartianResearchingSystem.Core.Spacing;
 
 namespace MartianResearchingSystem.Core
 {
-	public class ResearchSession
-	{
-		public MarsSurface MarsSurface { get; set; }
+    /// <summary>
+    /// Исследовательская сессия на Марсе.
+    /// </summary>
+    public class ResearchSession
+    {
+        /// <summary>
+        /// Поверхность Марса.
+        /// </summary>
+        public MarsSurface MarsSurface { get; set; }
 
-		public Dictionary<Robot.Robot, List<Command.Command>> ThingsToDo { get; set; }
+        /// <summary>
+        /// Роботы, высаживаемые на поверхность и набор инструкций для каждого.
+        /// </summary>
+        public Dictionary<SimpleMartianRobot, List<Command>> Operands { get; set; }
 
-		public List<Robot.Robot> Robots { get; set; }
+        public void Process()
+        {
+            foreach (var operand in Operands)
+            {
+                var robot = operand.Key;
+                var commandsToExecute = operand.Value;
 
+                foreach (var command in commandsToExecute)
+                {
+                    var previousPosition = robot.CurrentPosition;
 
-		public void Process()
-		{
-			foreach (var thingToDo in ThingsToDo)
-			{
-				var robot = thingToDo.Key;
-				var commandsToExecute = thingToDo.Value;
+                    robot.ExecuteCommand(command);
 
-				foreach (var command in commandsToExecute)
-				{
-					if (command != Command.Command.MoveForward)
-					{
-						robot.ExecuteCommand(command);
+                    var newPosition = robot.CurrentPosition;
 
-						continue;
-					}
+                    if (!IsOutside(newPosition))
+                    {
+                        continue;
+                    }
 
-					var previousPosition = robot.CurrentPosition;
+                    if (MarsSurface.IsPositionScented(previousPosition))
+                    {
+                        robot.CurrentPosition = previousPosition;
 
-					var newPosition = robot.GetNewPosition();
+                        continue;
+                    }
 
-					if (IsOutside(newPosition))
-					{
-						if (MarsSurface.IsPositionScented(previousPosition))
-						{
-							continue;
-						}
+                    robot.IsLost = true;
+                    robot.CurrentPosition = previousPosition;
 
-						robot.IsLost = true;
+                    MarsSurface.AddScentedPosition(previousPosition);
+                    
+                    break;
+                }
+            }
+        }
 
-						MarsSurface.AddScentedPosition(previousPosition);
-
-						break;
-					}
-					else
-					{
-						robot.ExecuteCommand(command);
-					}
-				}
-			}
-		}
-
-
-		private bool IsOutside(Position position) => position.XCoord > MarsSurface.Width || position.YCoord > MarsSurface.Length;
-	}
+        /// <summary>
+        /// Определяет, является ли позиция вышедшей за пределы поверхности Марса.
+        /// </summary>
+        /// <param name="position">Проверяемая позиция.</param>
+        /// <returns>true, если позиция выходит за пределы Марса, в противном случае - false.</returns>
+        private bool IsOutside(Position position) => (position.XCoord < 0 || position.XCoord > MarsSurface.Length)
+            || (position.YCoord < 0 || position.YCoord > MarsSurface.Width);
+    }
 }
