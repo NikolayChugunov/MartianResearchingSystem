@@ -20,7 +20,10 @@ namespace MartianResearchingSystem.Core
         /// </summary>
         public Dictionary<SimpleMartianRobot, List<Command>> Operands { get; set; }
 
-        public void Process()
+        /// <summary>
+        /// Осуществляет выполнение сессии
+        /// </summary>
+        public void Execute()
         {
             foreach (var operand in Operands)
             {
@@ -62,7 +65,9 @@ namespace MartianResearchingSystem.Core
         /// </summary>
         /// <param name="position">Проверяемая позиция.</param>
         /// <returns>true, если позиция выходит за пределы Марса, в противном случае - false.</returns>
-        private bool IsOutside(Position position) => (position.XCoord < 0 || position.XCoord > MarsSurface.Length)
-            || (position.YCoord < 0 || position.YCoord > MarsSurface.Width);
+        private bool IsOutside(Position position) => position.XCoord < 0
+            || position.XCoord > MarsSurface.Length
+            || position.YCoord < 0
+            || position.YCoord > MarsSurface.Width;
     }
 }

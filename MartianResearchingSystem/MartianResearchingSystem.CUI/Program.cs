@@ -62,16 +62,17 @@ namespace MartianResearchingSystem.CUI
 			Console.WriteLine();
 			Console.WriteLine("Starting Reseacrch Session...");
 
-			var researchSession = new ResearchSession();
-			
-			researchSession.MarsSurface = marsSurface;
-			researchSession.Operands = thingsToDo;
-
-			foreach (var robot in thingsToDo)
+			var researchSession = new ResearchSession
 			{
-				researchSession.Process();
+				MarsSurface = marsSurface,
+				Operands = thingsToDo
+			};
 
-				Console.WriteLine(robot.Key);
+			researchSession.Execute();
+
+			foreach(var robot in researchSession.Operands.Keys)
+			{
+				Console.WriteLine(robot);
 			}
 
 			Console.ReadLine();
